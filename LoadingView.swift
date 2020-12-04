@@ -1,6 +1,5 @@
 //
 //  LoadingView.swift
-//  FSM v2
 //
 //  Created by tomieq on 17.08.2018.
 //  Copyright © 2018 tomieq. All rights reserved.
