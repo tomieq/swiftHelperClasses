@@ -1,5 +1,5 @@
 //
-//  Encodable&Decodable+Extension.swift
+//  Codable+Extension.swift
 //
 //  Created by tomieq on 14/12/2020.
 //  Copyright © 2020 tomieq. All rights reserved.
