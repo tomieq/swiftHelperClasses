@@ -19,3 +19,13 @@ extension UIViewController {
         view.endEditing(true)
     }
 }
+
+extension UIViewController {
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        return self.view.safeAreaLayoutGuide.topAnchor
+    }
+
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        return self.view.safeAreaLayoutGuide.bottomAnchor
+    }
+}
