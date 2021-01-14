@@ -37,7 +37,7 @@ class CoreDataDump {
         return self.persistentContainer.managedObjectModel.entitiesByName[entityName]?.relationshipsByName.map{ $0.key }.sorted() ?? []
     }
     
-    func dumpObject(object: NSManagedObject) -> [String: Any] {
+    func convertToDict(object: NSManagedObject) -> [String: Any] {
         
         var dict: [String: Any] = [:]
         if let entityName = object.entity.name {
@@ -69,21 +69,35 @@ class CoreDataDump {
         return dict
     }
     
-    func dumpObjects(forEntityName entityName: String) -> [[String: Any]] {
+    func convertToJson(dict: [String: Any]) -> String {
+        var options = JSONSerialization.WritingOptions.prettyPrinted
+        if #available(iOS 11.0, *) {
+            options = [JSONSerialization.WritingOptions.prettyPrinted, JSONSerialization.WritingOptions.sortedKeys]
+        }
+        if let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: options) {
+            return String(data: jsonData, encoding: .utf8) ?? "{}"
+        }
+        return "{}"
+    }
+    
+    func convertToJson(object: NSManagedObject) -> String {
+        let dict = self.convertToDict(object: object)
+        return self.convertToJson(dict: dict)
+    }
+    
+    func convertToDictList(forEntityName entityName: String) -> [[String: Any]] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let objects = (try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [NSManagedObject]) ?? []
-        
-        return objects.map{ self.dumpObject(object: $0) }
+        return objects.map{ self.convertToDict(object: $0) }
     }
     
-    func dumpObjects<T>(forFetchRequest fetchRequest: NSFetchRequest<T>) -> [[String: Any]] {
+    func convertToDictList<T>(forFetchRequest fetchRequest: NSFetchRequest<T>) -> [[String: Any]] {
         let objects = (try? self.persistentContainer.viewContext.fetch(fetchRequest) as? [NSManagedObject]) ?? []
-        
-        return objects.map{ self.dumpObject(object: $0) }
+        return objects.map{ self.convertToDict(object: $0) }
     }
     
-    func dumpObjectsToJson(forEntityName entityName: String) -> String {
-        let list = self.dumpObjects(forEntityName: entityName)
+    func convertToJson(entityName: String) -> String {
+        let list = self.convertToDictList(forEntityName: entityName)
         var options = JSONSerialization.WritingOptions.prettyPrinted
         if #available(iOS 11.0, *) {
             options = [JSONSerialization.WritingOptions.prettyPrinted, JSONSerialization.WritingOptions.sortedKeys]
