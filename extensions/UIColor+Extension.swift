@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIColor {
-
     convenience init(hex: String, alpha: Float = 1.0) {
         let scanner = Scanner(string: hex)
         if hex.hasPrefix("#") {
@@ -34,7 +33,7 @@ extension UIColor {
     }
 
     class func rgb(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ alpha: CGFloat = 1) -> UIColor {
-        return UIColor(red: r/255, green: g/255, blue: b/255, alpha: alpha)
+        return UIColor(red: r / 255, green: g / 255, blue: b / 255, alpha: alpha)
     }
 
     class func random() -> UIColor {

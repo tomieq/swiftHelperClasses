@@ -8,7 +8,6 @@
 import UIKit
 
 extension UINavigationController {
-
     func popToClassType<T: UIViewController>(_ stackClassType: T.Type) {
         for vc in viewControllers.reversed() {
             if vc is T {

@@ -16,7 +16,6 @@ extension Date {
 }
 
 extension Date {
-    
     func formatDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -24,7 +23,7 @@ extension Date {
         formatter.locale = Locale.current
         return formatter.string(from: self)
     }
-    
+
     func formatTime() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
@@ -32,8 +31,7 @@ extension Date {
         formatter.locale = Locale.current
         return formatter.string(from: self)
     }
-    
-    
+
     func formatDateWithTime() -> String {
         return "\(self.formatDate()) \(self.formatTime())"
     }

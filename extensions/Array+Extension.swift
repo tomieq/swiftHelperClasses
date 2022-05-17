@@ -8,11 +8,10 @@
 import Foundation
 
 extension Array where Element: Equatable {
-    
     // Remove first collection element that is equal to the given `object`:
     mutating func remove(object: Element) {
         if let index = firstIndex(of: object) {
-            remove(at: index)
+            self.remove(at: index)
         }
     }
 }
@@ -27,7 +26,7 @@ extension Array {
         }
         return count
     }
-    
+
     func contains(match: (Element) -> Bool) -> Bool {
         for x in self {
             if match(x) {
@@ -36,19 +35,18 @@ extension Array {
         }
         return false
     }
-    
+
     subscript(safeIndex index: Int) -> Element? {
         get {
-            guard index >= 0 && index < self.count else { return nil }
+            guard index >= 0, index < self.count else { return nil }
             return self[index]
         }
-        
+
         set(newValue) {
-            guard let value = newValue, index >= 0 && index < self.count else { return }
+            guard let value = newValue, index >= 0, index < self.count else { return }
             self[index] = value
         }
     }
-    
 }
 
 extension Array {
